@@ -1,20 +1,20 @@
 const express = require("express");
-const userRouter = express.Router();
-const userController = require("../../controllers/userController");
+const memberRouter = express.Router();
+const memberController = require("../../controllers/memberController");
 
-// Create user
-userRouter.post("/", userController.getAllUsers);
+// Create member
+memberRouter.post("/", memberController.getAllMembers);
 
-// Get all users
-userRouter.get("/", userController.getAllUsers);
+// Get all members
+memberRouter.get("/", memberController.getAllMembers);
 
-// Get user
-userRouter.get("/:idx", userController.getOneUser);
+// Get member
+memberRouter.get("/:idx", memberController.getOneMember);
 
-// Delete user
-userRouter.delete("/:idx", userController.deleteUser);
+// Delete member
+memberRouter.delete("/:idx", memberController.deleteMember);
 
 /** idx값으로 특정 멤버 정보 수정 */
-userRouter.put("/:idx", userController.updateUser);
+memberRouter.put("/:idx", memberController.updateMember);
 
-module.exports = userRouter;
+module.exports = memberRouter;
