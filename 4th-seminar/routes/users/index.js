@@ -63,6 +63,7 @@ router.post("/signup", async (req, res) => {
       );
   }
 });
+
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
@@ -131,7 +132,7 @@ router.get("/", async (req, res) => {
       .send(
         util.success(
           statusCode.OK,
-          responseMessage.MEMBER_READ_ALL_SUCCESS,
+          responseMessage.READ_USER_ALL_SUCCESS,
           users,
         ),
       );
@@ -142,7 +143,7 @@ router.get("/", async (req, res) => {
       .send(
         util.fail(
           statusCode.INTERNAL_SERVER_ERROR,
-          responseMessage.MEMBER_READ_ALL_FAIL,
+          responseMessage.READ_USER_ALL_FAIL,
         ),
       );
   }
@@ -176,10 +177,99 @@ router.get("/:id", async (req, res) => {
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
         util.fail(
-          statusCode.INTERNAL_SERVER_ERRORa,
-          responseMessage.MEMBER_READ_ALL_FAIL,
+          statusCode.INTERNAL_SERVER_ERROR,
+          responseMessage.READ_USER_FAIL,
         ),
       );
   }
 });
+
+router.put("/:id", async (req, res) => {
+  const { email, userName, password } = req.body;
+  const { id } = req.params;
+  try {
+    const updatedUser = await User.update(
+      {
+        email,
+        password,
+        userName,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+    if (!updatedUser) {
+      console.log("존재하지 않는 아이디입니다.");
+      return res
+        .status(statusCode.BAD_REQUEST)
+        .send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_USER));
+    }
+    return res
+      .status(statusCode.OK)
+      .send(
+        util.success(
+          statusCode.OK,
+          responseMessage.UPDATE_USER_SUCCESS,
+          updatedUser,
+        ),
+      );
+  } catch (error) {
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          responseMessage.UPDATE_USER_FAIL,
+        ),
+      );
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!user) {
+      return res
+        .status(statusCode.BAD_REQUEST)
+        .send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_USER));
+    }
+
+    const deletedUser = await User.destroy({
+      where: {
+        id,
+      },
+      attributes: ["id", "email", "userName"],
+    });
+    return res
+      .status(statusCode.OK)
+      .send(
+        util.success(
+          statusCode.OK,
+          responseMessage.DELETE_USER_SUCCESS,
+          deletedUser,
+        ),
+      );
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          responseMessage.DELETE_USER_FAIL,
+        ),
+      );
+  }
+});
+
 module.exports = router;

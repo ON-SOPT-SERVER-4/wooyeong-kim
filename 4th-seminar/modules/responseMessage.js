@@ -6,7 +6,6 @@ module.exports = {
   MEMBER_CREATE_SUCCESS: "회원 생성 성공",
   MEMBER_READ_SUCCESS: "회원 조회 성공",
   MEMBER_READ_ALL_SUCCESS: "전체 회원 조회성공",
-  MEMBER_READ_ALL_FAIL: "전체 회원 조회실패",
   MEMBER_UPDATE_SUCCESS: "회원 수정 성공",
   MEMBER_DELETE_SUCCESS: "회원 삭제 성공",
 
@@ -21,9 +20,13 @@ module.exports = {
 
   /* User */
   READ_USER_SUCCESS: "사용자 조회 성공",
-  READ_USER_ALL_SUCCESS: "전체 사용자 조회 실패",
+  READ_USER_ALL_SUCCESS: "전체 사용자 조회 성공",
+  UPDATE_USER_SUCCESS: "사용자 수정 성공",
+  DELETE_USER_SUCCESS: "사용자 삭제 성공",
   READ_USER_FAIL: "사용자 조회 성공",
   READ_USER_ALL_FAIL: "전체 사용자 조회 실패",
+  UPDATE_USER_FAIL: "사용자 수정 실패",
+  DELETE_USER_FAIL: "사용자 삭제 실패",
 
   /* 서버에러 */
   INTERNAL_SERVER_ERROR: "서버 내부 오류",
