@@ -193,11 +193,17 @@ router.put("/:id", async (req, res) => {
   const { email, userName, password } = req.body;
   const { id } = req.params;
   try {
+    const salt = crypto.randomBytes(64).toString("base64");
+
+    const hashedPassword = crypto
+      .pbkdf2Sync(password, salt, 10000, 64, "sha512")
+      .toString("base64");
     const updatedUser = await User.update(
       {
         email,
-        password,
+        password: hashedPassword,
         userName,
+        salt,
       },
       {
         where: {
