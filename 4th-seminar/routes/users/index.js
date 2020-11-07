@@ -6,6 +6,7 @@ const responseMessage = require("../../modules/responseMessage");
 const statusCode = require("../../modules/statusCode");
 const { User } = require("../../models");
 
+// 회원가입
 router.post("/signup", async (req, res) => {
   const { email, password, userName } = req.body;
 
@@ -64,6 +65,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// 로그인
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
@@ -121,6 +123,7 @@ router.post("/signin", async (req, res) => {
   }
 });
 
+// 전체 유저 조회
 router.get("/", async (req, res) => {
   try {
     const users = await User.findAll({
@@ -149,6 +152,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// 특정 아이디로 유저 조회
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -184,6 +188,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// 유저 정보 수정
 router.put("/:id", async (req, res) => {
   const { email, userName, password } = req.body;
   const { id } = req.params;
@@ -228,6 +233,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// 유저 삭제
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
