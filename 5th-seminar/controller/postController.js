@@ -5,7 +5,7 @@ const { User, Post, Like } = require("../models");
 
 module.exports = {
   createPost: async (req, res) => {
-    // 여기선 validation 생략, 간단하게 진행
+    // LVL1 Homework
     const { title, contents, userId } = req.body;
     const postImageUrl = req.file.location;
     try {
@@ -74,6 +74,7 @@ module.exports = {
     }
   },
   toggleLike: async (req, res) => {
+    // LVL2 Homework
     const PostId = req.params.postId;
     const UserId = req.body.userId;
 
