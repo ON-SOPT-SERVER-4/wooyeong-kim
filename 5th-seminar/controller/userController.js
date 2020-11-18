@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const util = require("../modules/util");
 const responseMessage = require("../modules/responseMessage");
 const statusCode = require("../modules/statusCode");
-const { User } = require("../models");
+const { User, Post } = require("../models");
 const { userService } = require("../service");
 
 module.exports = {
@@ -129,6 +129,7 @@ module.exports = {
         );
     }
   },
+  // LVL3 Homework
   getOneUser: async (req, res) => {
     const { id } = req.params;
 
@@ -138,6 +139,15 @@ module.exports = {
           id,
         },
         attributes: ["id", "email", "userName"],
+        include: [
+          {
+            model: Post,
+          },
+          {
+            model: Post,
+            as: "Liked",
+          },
+        ],
       });
       if (!user) {
         console.log("존재하지 않는 아이디입니다.");
